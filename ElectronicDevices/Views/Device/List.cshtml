@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Device> 
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>List</h1>
+
+@foreach (Device item in Model)
+{
+    <div>
+        <h4>@item.Name</h4>
+        <h6>Цена: @item.Price</h6>
+        <p>@item.LongDescription</p>
+    </div>
+}
