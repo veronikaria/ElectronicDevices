@@ -48,6 +48,9 @@ namespace ElectronicDevices
 
             app.UseAuthorization();
 
+
+            DbInitializer.Seed(app.ApplicationServices.GetRequiredService<ApplicationContext>());
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
