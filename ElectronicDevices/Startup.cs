@@ -1,4 +1,6 @@
 using ElectronicDevices.EF;
+using ElectronicDevices.Interfaces;
+using ElectronicDevices.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +29,11 @@ namespace ElectronicDevices
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"))
             );
+
+            //services.AddSingleton<ApplicationContext>();
+            services.AddTransient<IDeviceRepository, DeviceRepository>();
+            services.AddTransient<IKindRepository, KindRepository>();
+
             services.AddControllersWithViews();
         }
 
@@ -48,8 +55,11 @@ namespace ElectronicDevices
 
             app.UseAuthorization();
 
-
-            DbInitializer.Seed(app.ApplicationServices.GetRequiredService<ApplicationContext>());
+            using (var service = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = service.ServiceProvider.GetService<ApplicationContext>();
+                DbInitializer.Seed(context);
+            }
 
             app.UseEndpoints(endpoints =>
             {

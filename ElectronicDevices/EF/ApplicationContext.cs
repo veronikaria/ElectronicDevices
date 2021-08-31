@@ -7,6 +7,7 @@ namespace ElectronicDevices.EF
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options): base(options)
         {
+            Database.EnsureCreated();
         }
 
         public DbSet<Device> Devices { get; set; }
