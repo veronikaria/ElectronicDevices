@@ -22,5 +22,10 @@ namespace ElectronicDevices.Controllers
             List<Device> devices = this.deviceRepository.Devices.ToList();
             return View(devices);
         }
+        public IActionResult Details(int deviceId)
+        {
+            Device devices = this.deviceRepository.Devices.FirstOrDefault(dev=>dev.DeviceId== deviceId);
+            return View(devices);
+        }
     }
 }
