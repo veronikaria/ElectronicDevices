@@ -16,8 +16,7 @@ namespace ElectronicDevices.Repositories
         }
         public IEnumerable<Kind> Kinds 
         {
-            get => this.context.Kind.ToList(); 
-            set => throw new System.NotImplementedException(); 
+            get => this.context.Kinds.ToList(); 
         }
     }
 }

@@ -9,8 +9,8 @@ namespace ElectronicDevices.EF
         {
         }
 
-        public DbSet<Device> Device { get; set; }
-        public DbSet<Kind> Kind { get; set; }
+        public DbSet<Device> Devices { get; set; }
+        public DbSet<Kind> Kinds { get; set; }
 
     }
 }

@@ -5,6 +5,6 @@ namespace ElectronicDevices.Interfaces
 {
     public interface IKindRepository
     {
-        public IEnumerable<Kind> Kinds { get; set; }
+        public IEnumerable<Kind> Kinds { get; }
     }
 }
