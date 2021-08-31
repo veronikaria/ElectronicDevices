@@ -1,15 +1,13 @@
-﻿@model IEnumerable<Device> 
+﻿@model IEnumerable<Device>
 @{
     ViewData["Title"] = "List";
 }
 
-<h1>List</h1>
-
-@foreach (Device item in Model)
-{
-    <div>
-        <h4>@item.Name</h4>
-        <h6>Цена: @item.Price</h6>
-        <p>@item.LongDescription</p>
+<div class="container">
+    <div class="row">
+        @foreach (Device dev in Model)
+        {
+            @await Html.PartialAsync("_GetDevice", dev)
+        }
     </div>
-}
+</div>
