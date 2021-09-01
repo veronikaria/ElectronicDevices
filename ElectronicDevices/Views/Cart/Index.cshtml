@@ -1,0 +1,43 @@
+﻿@model CartViewModel
+
+<div class="row checkoutForm">
+    <h2>Your cart</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Selected amount</th>
+                <th>Device</th>
+                <th class="text-right">Price</th>
+                <th class="text-right">All Summ</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var line in Model.Cart.CartItems)
+            {
+                <tr>
+                    <td class="text-center">@line.Number</td>
+                    <td class="text-left">@line.Device.Name</td>
+                    <td class="text-right">@line.Device.Price.ToString("c")</td>
+                    <td class="text-right">
+                        @((line.Number * line.Device.Price).ToString("c"))
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-right">All Summ:</td>
+                <td class="text-right">
+                    @Model.CartAllSumm.ToString("c")
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    
+</div>
+
+
+
+

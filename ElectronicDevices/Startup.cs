@@ -1,8 +1,10 @@
 using ElectronicDevices.EF;
 using ElectronicDevices.Interfaces;
+using ElectronicDevices.Models;
 using ElectronicDevices.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,7 +36,14 @@ namespace ElectronicDevices
             services.AddTransient<IDeviceRepository, DeviceRepository>();
             services.AddTransient<IKindRepository, KindRepository>();
 
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(service => Cart.GetCart(service));
+
+
             services.AddControllersWithViews();
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -52,7 +61,7 @@ namespace ElectronicDevices
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthorization();
 
             using (var service = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())

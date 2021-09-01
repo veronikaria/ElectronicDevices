@@ -9,5 +9,11 @@
     </h2>
     <h6>Цена: @Model.Price₴</h6>
     <p>@Model.LongDescription</p>
+    <p class="button ">
+        <a class="btn btn-success" id="cartButton" asp-controller="Cart"
+           asp-action="AddToCart" asp-route-deviceId="@Model.DeviceId">
+            Добавить в корзину
+        </a>
+    </p>
 </div>
  

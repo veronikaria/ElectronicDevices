@@ -12,6 +12,7 @@ namespace ElectronicDevices.EF
 
         public DbSet<Device> Devices { get; set; }
         public DbSet<Kind> Kinds { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
 
     }
 }
