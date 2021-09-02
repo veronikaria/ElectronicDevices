@@ -1,11 +1,13 @@
-﻿@model IEnumerable<Device>
+﻿@model DeviceListViewModel
 @{
     ViewData["Title"] = "List";
 }
 
+<h2>@Model.CurrentKind</h2>
+
 <div class="container">
     <div class="row">
-        @foreach (Device dev in Model)
+        @foreach (Device dev in Model.Devices)
         {
             @await Html.PartialAsync("_GetDevice", dev)
         }

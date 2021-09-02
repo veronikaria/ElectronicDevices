@@ -35,13 +35,17 @@ namespace ElectronicDevices
             //services.AddSingleton<ApplicationContext>();
             services.AddTransient<IDeviceRepository, DeviceRepository>();
             services.AddTransient<IKindRepository, KindRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
 
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(service => Cart.GetCart(service));
 
-
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(mvcOtions =>
+            {
+                mvcOtions.EnableEndpointRouting = false;
+            });
+            services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();
         }
@@ -60,8 +64,11 @@ namespace ElectronicDevices
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting();
+            app.UseAuthentication();
+
             app.UseSession();
+            app.UseRouting();
+
             app.UseAuthorization();
 
             using (var service = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
@@ -70,12 +77,19 @@ namespace ElectronicDevices
                 DbInitializer.Seed(context);
             }
 
-            app.UseEndpoints(endpoints =>
+            app.UseMvc(routes =>
             {
-                endpoints.MapControllerRoute(
+                routes.MapRoute(
+                    name: "device",
+                    template: "Device/{action}/{kind?}",
+                    defaults: new { controller = "Device", action = "List" }
+                    );
+
+                routes.MapRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
+            
         }
     }
 }

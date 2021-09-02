@@ -2,7 +2,7 @@
 
 
 <li class="nav-item form-control mr-sm-2" style="max-width:80px;">
-    <a asp-controller="Cart">
+    <a asp-controller="Cart" asp-action="Index">
         <span class="glyphicon glyphicon-shopping-cart"></span>
         @if (Model.Cart.CartItems.Count > 0)
         {
