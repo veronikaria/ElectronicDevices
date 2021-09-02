@@ -1,0 +1,16 @@
+﻿@model CartViewModel
+
+
+<li class="nav-item form-control mr-sm-2" style="max-width:80px;">
+    <a asp-controller="Cart">
+        <span class="glyphicon glyphicon-shopping-cart"></span>
+        @if (Model.Cart.CartItems.Count > 0)
+        {
+            <span id="cart-status">
+                @Model.Cart.CartItems.Count
+            </span>
+        }
+        <i class="fas fa-shopping-basket"></i>
+    </a>
+</li>
+

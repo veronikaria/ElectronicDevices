@@ -30,7 +30,7 @@ namespace ElectronicDevices.Models
 
         public void AddToCart(Device device, int cnt)
         {
-            CartItem cart = this.CartItems.FirstOrDefault(
+            CartItem cart = context.CartItems.FirstOrDefault(
                 c => c.DeviceId == device.DeviceId
                 && c.CartId == this.CartId
                 );
