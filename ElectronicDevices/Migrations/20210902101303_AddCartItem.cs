@@ -11,7 +11,8 @@ namespace ElectronicDevices.Migrations
                 name: "CartItems",
                 columns: table => new
                 {
-                    CartItemId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CartItemId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CartId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Number = table.Column<int>(type: "int", nullable: false),
                     DeviceId = table.Column<int>(type: "int", nullable: false),

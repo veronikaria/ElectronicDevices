@@ -43,7 +43,7 @@ namespace ElectronicDevices.Models
                     Device = device,
                     Number = cnt,
                 };
-                this.CartItems.Add(cart);
+                context.CartItems.Add(cart);
             }
             else
             {
@@ -56,7 +56,7 @@ namespace ElectronicDevices.Models
         {
             if (this.CartItems == null)
             {
-                this.CartItems = context.CartItems.Where(c => c.CartId == CartId)
+                this.CartItems = context.CartItems.Where(c => c.CartId.Equals(CartId))
                     .Include(c => c.Device).ToList();
             }
             return this.CartItems;

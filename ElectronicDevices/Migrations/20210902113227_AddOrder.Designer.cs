@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectronicDevices.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20210902101303_AddCartItem")]
-    partial class AddCartItem
+    [Migration("20210902113227_AddOrder")]
+    partial class AddOrder
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,8 +23,8 @@ namespace ElectronicDevices.Migrations
 
             modelBuilder.Entity("ElectronicDevices.Models.CartItem", b =>
                 {
-                    b.Property<int>("CartItemId")
-                        .HasColumnType("int");
+                    b.Property<string>("CartItemId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CartId")
                         .HasColumnType("nvarchar(max)");
@@ -101,6 +101,70 @@ namespace ElectronicDevices.Migrations
                     b.ToTable("Kinds");
                 });
 
+            modelBuilder.Entity("ElectronicDevices.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateOrder")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("ElectronicDevices.Models.OrderDetail", b =>
+                {
+                    b.Property<int>("OrderDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DeviceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("OrderDetailId");
+
+                    b.HasIndex("DeviceId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderDetails");
+                });
+
             modelBuilder.Entity("ElectronicDevices.Models.CartItem", b =>
                 {
                     b.HasOne("ElectronicDevices.Models.Device", "Device")
@@ -123,9 +187,33 @@ namespace ElectronicDevices.Migrations
                     b.Navigation("Kind");
                 });
 
+            modelBuilder.Entity("ElectronicDevices.Models.OrderDetail", b =>
+                {
+                    b.HasOne("ElectronicDevices.Models.Device", "Device")
+                        .WithMany()
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ElectronicDevices.Models.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Device");
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("ElectronicDevices.Models.Kind", b =>
                 {
                     b.Navigation("Devices");
+                });
+
+            modelBuilder.Entity("ElectronicDevices.Models.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
                 });
 #pragma warning restore 612, 618
         }
