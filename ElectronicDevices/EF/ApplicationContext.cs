@@ -1,9 +1,11 @@
 ﻿using ElectronicDevices.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ElectronicDevices.EF
 {
-    public class ApplicationContext: DbContext
+    public class ApplicationContext: IdentityDbContext<IdentityUser>
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options): base(options)
         {

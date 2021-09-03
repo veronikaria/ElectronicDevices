@@ -5,15 +5,12 @@ using ElectronicDevices.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace ElectronicDevices
 {
@@ -31,8 +28,9 @@ namespace ElectronicDevices
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"))
             );
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationContext>();
 
-            //services.AddSingleton<ApplicationContext>();
             services.AddTransient<IDeviceRepository, DeviceRepository>();
             services.AddTransient<IKindRepository, KindRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
@@ -63,8 +61,8 @@ namespace ElectronicDevices
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseSession();
             app.UseRouting();

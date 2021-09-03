@@ -1,0 +1,19 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <li>
+        <a class="form-control-plaintext text-primary" asp-action="Profile" asp-controller="Account">Ваш профиль @User.Identity.Name</a>
+    </li>
+    <li>
+        <form method="post" asp-controller="Account" asp-action="Logout" class="nav-item mr-sm-2">
+            <input class="form-control-plaintext text-primary" type="submit" value="Выход" />
+        </form>
+    </li>
+
+}
+else
+{
+    <li class="nav-item form-control-plaintext mr-sm-2">
+        <a class="link-primary" asp-controller="Account" asp-action="Register">Регистрация</a>
+        <a class="link-primary" asp-controller="Account" asp-action="Login">Вход</a>
+    </li>
+}

@@ -29,6 +29,8 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Device" asp-action="List">Devices</a>
                         </li>
                         @await Component.InvokeAsync("CartSummary")
+                        @await Html.PartialAsync("LoginNavigation")
+
                     </ul>
                 </div>
             </div>

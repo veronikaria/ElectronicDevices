@@ -1,5 +1,6 @@
 ﻿using ElectronicDevices.Interfaces;
 using ElectronicDevices.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -16,12 +17,14 @@ namespace ElectronicDevices.Controllers
             this.cart = cart;
         }
 
+        [Authorize]
         public IActionResult Checkout()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Checkout(Order order)
         {
             List<CartItem> items = this.cart.GetCartItems();
