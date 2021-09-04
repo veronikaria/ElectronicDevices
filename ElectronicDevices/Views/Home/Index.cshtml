@@ -2,7 +2,42 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<form method="get">
+    <div class="row input-group mb-3">
+        <input name="Name" class="form-control" placeholder="Поиск товаров">
+        <select class="form-select" name="sortDevice" asp-items="Html.GetEnumSelectList<SortDeviceState>()">
+        </select>
+        <div class="input-group-append">
+            <input type="submit" value="Фильтр" class="btn btn-info" />
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (Device item in Model.Devices)
+        {
+            @await Html.PartialAsync("_GetDevice", item);
+        }
+    </div>
+</form>
+<br>
+<br>
+@if (Model.PageDeviceViewModel.HasPreviousPage)
+{
+    <a asp-action="Index"
+       asp-route-page="@(Model.PageDeviceViewModel.PageNumber - 1)"
+       asp-route-sortDevice="@(Model.SortDeviceViewModel.PriceSort)"
+       class="btn  btn-outline-dark">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Назад
+    </a>
+}
+@if (Model.PageDeviceViewModel.HasNextPage)
+{
+    <a asp-action="Index"
+       asp-route-page="@(Model.PageDeviceViewModel.PageNumber + 1)"
+       asp-route-sortDevice="@(Model.SortDeviceViewModel.PriceSort)"
+       class="btn btn-outline-dark">
+        Вперед
+        <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
+}
