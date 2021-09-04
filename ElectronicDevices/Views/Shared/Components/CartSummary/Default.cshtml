@@ -1,16 +1,15 @@
 ﻿@model CartViewModel
 
 
-<li class="nav-item form-control mr-sm-2" style="max-width:80px;">
-    <a asp-controller="Cart" asp-action="Index">
-        <span class="glyphicon glyphicon-shopping-cart"></span>
-        @if (Model.Cart.CartItems.Count > 0)
-        {
-            <span id="cart-status">
-                @Model.Cart.CartItems.Count
-            </span>
-        }
-        <i class="fas fa-shopping-basket"></i>
-    </a>
-</li>
+<a asp-controller="Cart" asp-action="Index">
+    <span class="glyphicon glyphicon-shopping-cart"></span>
+    <i>Корзина</i>
+    @if (Model.Cart.CartItems.Count > 0)
+    {
+        <span id="cart-status">
+            @Model.Cart.CartItems.Count
+        </span>
+    }
+    @*<i class="fas fa-shopping-cart"></i>*@
+</a>
 
