@@ -41,6 +41,18 @@ namespace ElectronicDevices.Controllers
             }
             return RedirectToAction("Index");
         }
-       
+
+        public IActionResult RemoveFromCart(int deviceId)
+        {
+            var selectedDevice = this.repository.Devices
+                .FirstOrDefault(t => t.DeviceId == deviceId);
+
+            if (selectedDevice != null)
+            {
+                this.cart.RemoveFromCart(selectedDevice);
+            }
+            return RedirectToAction("Index");
+        }
+
     }
 }

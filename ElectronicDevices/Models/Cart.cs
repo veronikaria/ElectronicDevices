@@ -52,6 +52,19 @@ namespace ElectronicDevices.Models
             context.SaveChanges();
         }
 
+        public void RemoveFromCart(Device device)
+        {
+            CartItem cart = context.CartItems.FirstOrDefault(
+                c => c.DeviceId == device.DeviceId
+                && c.CartId == this.CartId
+                );
+            if (cart != null)
+            {
+                context.CartItems.Remove(cart);
+            }
+            context.SaveChanges();
+        }
+
         public List<CartItem> GetCartItems()
         {
             if (this.CartItems == null)
